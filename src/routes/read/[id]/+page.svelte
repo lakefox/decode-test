@@ -3,7 +3,7 @@
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 	import { bind, text } from 'svelte/internal';
-	import { removeStopwords } from 'stopword';
+	import { removeStopwords } from '../../../../node_modules/stopword/dist/stopword.esm.min.mjs';
 	let article = { title: '', content: '' };
 	let coverImage = '';
 	let innerHeight, innerWidth;
