@@ -3,7 +3,7 @@ import * as Tokenizer from 'sbd';
 import * as request from 'request';
 import * as htmlToText from 'html-to-text';
 import * as cheerio from 'cheerio';
-
+// comment
 function splitContentToSentences(content, callback) {
     if (content.indexOf('.') === -1) {
         return callback(false)
