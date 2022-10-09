@@ -1,5 +1,5 @@
 import { error } from '@sveltejs/kit';
-import { summarizeFromUrl } from "./summary.js";
+import { summarizeFromUrl } from "./summary.mjs";
 
 /** @type {import('./$types').RequestHandler} */
 export async function GET({ url }) {
