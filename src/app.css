@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+div.story {
+    font-size: 19px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+div.story a {
+    text-decoration: underline;
+    color: #3f51b5;
+}
+
+div.story p {
+    margin-bottom: 20px;
+    background: #fff;
+    padding: 10px;
+}
+
+.fullCenterH {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 100vh;
+    max-width: unset;
+    z-index: -1;
+    margin: auto;
+    overflow: auto;
+    -o-object-fit: contain;
+    object-fit: contain;
+}
+
+.fullCenterW {
+    z-index: -1;
+    width: 100vw;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    overflow: auto;
+    position: fixed;
+    right: 0;
+    top: 0;
+    -o-object-fit: contain;
+    object-fit: contain;
+}
+
+.fullImageCont {
+    position: relative;
+    width: 400px;
+    height: 300px;
+    overflow: hidden;
+    background: #000;
+    display: flex;
+    justify-content: center;
+}
+
+.fullImage {
+    width: 100%;
+    margin: auto;
+    overflow: auto;
+    -o-object-fit: contain;
+    object-fit: contain;
+}
