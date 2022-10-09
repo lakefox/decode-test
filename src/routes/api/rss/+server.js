@@ -1,8 +1,6 @@
 import { error } from '@sveltejs/kit';
 import Parser from "rss-parser";
-import { summarizeFromUrl } from "node-summary";
 import fs from "fs";
-import path from "path";
 
 /** @type {import('./$types').RequestHandler} */
 export async function GET({ url }) {
