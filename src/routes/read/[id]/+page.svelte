@@ -4,6 +4,8 @@
 	import { onMount } from 'svelte';
 	import { bind, text } from 'svelte/internal';
 	import { removeStopwords } from '../../../../node_modules/stopword/dist/stopword.esm.min.mjs';
+	// import { keySentence } from './keySentence';
+
 	let article = { title: '', content: '' };
 	let coverImage = '';
 	let innerHeight, innerWidth;
@@ -49,25 +51,33 @@
 							cntLn += content[i].innerText.length;
 						}
 						cntLn = cntLn / content.length;
-
+						let massText = [];
 						for (let i = 0; i < content.length; i++) {
 							if (content[i].innerText.length < cntLn) {
 								newContent[newContent.length - 1] += content[i].innerHTML;
+								massText[massText.length - 1] += content[i].innerText;
 							} else {
 								newContent.push(content[i].innerHTML);
+								massText.push(content[i].innerText);
 							}
 						}
 						if (newContent[0] == '') {
 							newContent = newContent.slice(1);
 						}
+						// let scorer = keySentence(massText.join(' '));
+						// massText.forEach((element) => {
+						// 	console.log(element, scorer(element));
+						// });
 					});
 			});
 	});
 	function back() {
 		index = Math.max(index - 1, 0);
+		window.scrollTo(0, 0);
 	}
 	function next() {
 		index = Math.min(index + 1, newContent.length - 1);
+		window.scrollTo(0, 0);
 	}
 	function show() {
 		showStory = !showStory;
@@ -116,7 +126,7 @@
 			>
 				The&nbsp;Story
 			</div>
-			<div class="bg-white px-[10px] border-[5px] border-black">
+			<div class="bg-white px-[10px] border-[5px] border-black mb-[200px]">
 				{@html newContent[index]}
 			</div>
 		</div>

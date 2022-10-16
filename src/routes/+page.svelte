@@ -14,16 +14,16 @@
 		{#each rssItems as item}
 			{#if item['media:content'] || item.enclosure}
 				<a href="/read/{encodeURIComponent(item.link)}">
-					<div class="relative max-w-[100%] w-[400px] m-[20px]">
-						<div class="fullImageCont">
+					<div class="relative w-[100vw]">
+						<div class="w-[100vw]">
 							{#if item['media:content']}
 								<img
-									class="fullImage"
+									class="w-[100vw]"
 									src={item['media:content'].$.url}
 									alt={(item['media:content']['media:descritpion'] || [{ _: '' }])[0]._}
 								/>
 							{:else if item.enclosure}
-								<img class="fullImage" src={item.enclosure.url} alt={item['content:encoded']} />
+								<img class="w-[100vw]" src={item.enclosure.url} alt={item['content:encoded']} />
 							{/if}
 						</div>
 						<div class="absolute top-0 z-[2]">

@@ -4,7 +4,10 @@ import fs from "fs";
 
 /** @type {import('./$types').RequestHandler} */
 export async function GET({ url }) {
-    let rss = JSON.parse(fs.readFileSync("./rss.json"));
+    let rss = { created: 0 };
+    if (fs.existsSync("./rss.json")) {
+        rss = JSON.parse(fs.readFileSync("./rss.json"));
+    }
     if (rss.created >= new Date().getTime() - 3.6e+6) {
         return new Response(JSON.stringify(rss.content));
     } else {
