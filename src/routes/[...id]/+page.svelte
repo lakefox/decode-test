@@ -14,7 +14,6 @@
 	let showStory = false;
 	let sum = 'Loading Summary';
 	onMount(() => {
-		console.log($page.params.id);
 		fetch(`https://cors.lowsh.workers.dev?${$page.params.id}`)
 			.then((res) => res.text())
 			.then((res) => {
