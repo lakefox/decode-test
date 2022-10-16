@@ -3,8 +3,7 @@
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 	import { bind, text } from 'svelte/internal';
-	import { removeStopwords } from '../../../../node_modules/stopword/dist/stopword.esm.min.mjs';
-	// import { keySentence } from './keySentence';
+	import { keySentence } from './keySentence';
 
 	let article = { title: '', content: '' };
 	let coverImage = '';
@@ -15,60 +14,50 @@
 	let showStory = false;
 	let sum = 'Loading Summary';
 	onMount(() => {
-		fetch(`/api/smmry?${encodeURIComponent($page.params.id)}`)
-			.then((r) => r.text())
-			.then((r) => {
-				sum = r;
-				let sw = removeStopwords(r.split(' '));
-				fetch(`https://cors.lowsh.workers.dev?${$page.params.id}`)
-					.then((res) => res.text())
-					.then((res) => {
-						let dp = new DOMParser();
-						let doc = dp.parseFromString(res, 'text/html');
-						coverImage = doc.head.querySelector('meta[property="og:image"]').content;
-						article = new Readability.Readability(doc).parse();
-						let parsed = dp.parseFromString(article.content, 'text/html');
-						content = [...parsed.querySelectorAll('p')];
-						content = content.filter((a) => {
-							return (
-								a.innerHTML.trim() != '' &&
-								a.innerHTML.toLowerCase().indexOf('read also') == -1 &&
-								a.innerHTML.toLowerCase().indexOf('img') == -1
-							);
-						});
-						content = content.map((e) => {
-							for (let i = 0; i < sw.length; i++) {
-								const word = sw[i];
-								e.innerHTML = e.innerHTML.replaceAll(
-									` ${word} `,
-									`<b class="text-blue-400"> ${word} </b>`
-								);
-							}
-							return e;
-						});
-						let cntLn = 0;
-						for (let i = 0; i < content.length; i++) {
-							cntLn += content[i].innerText.length;
-						}
-						cntLn = cntLn / content.length;
-						let massText = [];
-						for (let i = 0; i < content.length; i++) {
-							if (content[i].innerText.length < cntLn) {
-								newContent[newContent.length - 1] += content[i].innerHTML;
-								massText[massText.length - 1] += content[i].innerText;
-							} else {
-								newContent.push(content[i].innerHTML);
-								massText.push(content[i].innerText);
-							}
-						}
-						if (newContent[0] == '') {
-							newContent = newContent.slice(1);
-						}
-						// let scorer = keySentence(massText.join(' '));
-						// massText.forEach((element) => {
-						// 	console.log(element, scorer(element));
-						// });
-					});
+		console.log($page.params.id);
+		fetch(`https://cors.lowsh.workers.dev?${$page.params.id}`)
+			.then((res) => res.text())
+			.then((res) => {
+				let dp = new DOMParser();
+				let doc = dp.parseFromString(res, 'text/html');
+				coverImage = doc.head.querySelector('meta[property="og:image"]').content;
+				article = new Readability.Readability(doc).parse();
+				let parsed = dp.parseFromString(article.content, 'text/html');
+				content = [...parsed.querySelectorAll('p')];
+				content = content.filter((a) => {
+					return (
+						a.innerHTML.trim() != '' &&
+						a.innerHTML.toLowerCase().indexOf('read also') == -1 &&
+						a.innerHTML.toLowerCase().indexOf('img') == -1
+					);
+				});
+
+				let cntLn = 0;
+				for (let i = 0; i < content.length; i++) {
+					cntLn += content[i].innerText.length;
+				}
+				cntLn = cntLn / content.length;
+				let massText = [];
+				for (let i = 0; i < content.length; i++) {
+					if (content[i].innerText.length < cntLn) {
+						newContent[newContent.length - 1] += content[i].innerHTML;
+						massText[massText.length - 1] += content[i].innerText;
+					} else {
+						newContent.push(content[i].innerHTML);
+						massText.push(content[i].innerText);
+					}
+				}
+				if (newContent[0] == '') {
+					newContent = newContent.slice(1);
+				}
+				let scorer = keySentence(massText.join(' '));
+				let summaries = [];
+				massText.forEach((element) => {
+					summaries.push(scorer(element));
+				});
+				sum = summaries.sort((a, b) => {
+					return a.score - b.score;
+				})[0].text;
 			});
 	});
 	function back() {
