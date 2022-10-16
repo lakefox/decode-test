@@ -12,7 +12,7 @@
 	<div class="flex flex-row flex-wrap justify-center">
 		{#each rssItems as item}
 			{#if item['media:content'] || item.enclosure}
-				<a href="/read/{encodeURIComponent(item.link)}">
+				<a href="/{encodeURIComponent(item.link)}">
 					<div class="relative w-[100vw]">
 						<div class="w-[100vw]">
 							{#if item['media:content']}
