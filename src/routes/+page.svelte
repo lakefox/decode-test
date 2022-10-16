@@ -1,7 +1,6 @@
 <script>
 	/** @type {import('./$types').PageData} */
 	export let data;
-	console.log(data);
 	let rssItems = data.items.slice(0, 50);
 </script>
 
