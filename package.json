@@ -28,6 +28,7 @@
 	"dependencies": {
 		"@mozilla/readability": "^0.4.2",
 		"canvas": "^2.10.1",
+		"jsdom": "^20.0.1",
 		"rss-parser": "^3.12.0"
 	}
 }
