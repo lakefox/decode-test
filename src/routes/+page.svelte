@@ -9,7 +9,7 @@
 	<title>MOODL.XYZ</title>
 </svelte:head>
 
-<div class="bg-amber-200">
+<div class="">
 	<div class="flex flex-row flex-wrap justify-center">
 		{#each rssItems as item}
 			{#if item['media:content'] || item.enclosure}
