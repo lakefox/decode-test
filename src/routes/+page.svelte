@@ -1,45 +1,46 @@
 <script>
-	/** @type {import('./$types').PageData} */
-	export let data;
-	let rssItems = data.items.slice(0, 50);
+	let innerWidth, innerHeight;
+	let srcs = ['/index/1.jpeg', '/index/2.jpeg', '/index/3.jpeg'];
+	let img = srcs[0];
+	let i = 0;
+	setInterval(() => {
+		i++;
+		if (i > srcs.length - 1) {
+			i = 0;
+		}
+		img = srcs[i];
+	}, 5000);
 </script>
 
 <svelte:head>
-	<title>MOODL.XYZ</title>
+	<title>DECODE</title>
 </svelte:head>
 
-<div class="">
-	<div class="flex flex-row flex-wrap justify-center">
-		{#each rssItems as item}
-			{#if item['media:content'] || item.enclosure}
-				<a href="/{encodeURIComponent(item.link)}">
-					<div class="relative w-[100vw]">
-						<div class="w-[100vw]">
-							{#if item['media:content']}
-								<img
-									class="w-[100vw]"
-									src={item['media:content'].$.url}
-									alt={(item['media:content']['media:descritpion'] || [{ _: '' }])[0]._}
-								/>
-							{:else if item.enclosure}
-								<img class="w-[100vw]" src={item.enclosure.url} alt={item['content:encoded']} />
-							{/if}
-						</div>
-						<div class="absolute top-0 z-[2]">
-							<div
-								class="text-[20px] leading-[22px] font-bold text-left mb-[20px] bg-white px-[10px] border-[5px] border-black m-[10px]"
-							>
-								{item.title}
-							</div>
-							<!-- {#if item.content}
-						<p class="mb-6 text-gray-500">
-							{@html item.content}
-						</p>
-					{/if} -->
-						</div>
-					</div>
-				</a>
-			{/if}
-		{/each}
+<svelte:window bind:innerHeight bind:innerWidth />
+
+{#if innerHeight < innerWidth}
+	<img src={img} alt="placeholder img" class="fullCenterW " srcset="" />
+{:else}
+	<img src={img} alt="placeholder img" class="fullCenterH " srcset="" />
+{/if}
+
+<div class="text-white w-full">
+	<div class="ml-[20px] mt-[20px] text-[60px] font-bold bg-white text-black w-min px-[20px]">
+		DECODE
 	</div>
+	<div class="w-[700px] max-w-[90%] m-auto mt-[100px]">
+		<div class="purple font-bold text-[50px]">News Decoded</div>
+		<div
+			class="mb-[20px] bg-white px-[10px] border-[5px] border-black font-bold text-black text-[50px]"
+		>
+			We break down any story on the web into a quick easy to read infographic
+		</div>
+	</div>
+	<a href="/explore">
+		<div
+			class="text-black mx-auto cursor-pointer mt-[200px] text-[30px] font-bold mb-[20px] bg-white px-[10px] border-[5px] border-black w-min"
+		>
+			EXPLORE
+		</div>
+	</a>
 </div>

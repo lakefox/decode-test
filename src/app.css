@@ -79,3 +79,23 @@ body {
 g {
     color: rgb(96 165 250);
 }
+
+.yellow {
+    color: #FFBE0B;
+}
+
+.orange {
+    color: #FB5607;
+}
+
+.pink {
+    color: #FF006E;
+}
+
+.purple {
+    color: #8338EC;
+}
+
+.blue {
+    color: #3A86FF;
+}

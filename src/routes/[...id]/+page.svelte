@@ -9,11 +9,9 @@
 
 	function back() {
 		index = Math.max(index - 1, 0);
-		window.scrollTo(0, 0);
 	}
 	function next() {
 		index = Math.min(index + 1, data.slides.length - 1);
-		window.scrollTo(0, 0);
 	}
 	function show() {
 		showStory = !showStory;
@@ -22,7 +20,7 @@
 
 <svelte:head>
 	<title>{data.title}</title>
-	<meta property="og:title" content="MOODL - {data.title}" />
+	<meta property="og:title" content="DECODE - {data.title}" />
 	<meta property="og:image" content={data.image} />
 	<meta name="description" content={data.keyPoint} />
 </svelte:head>
