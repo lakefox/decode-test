@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+    background: #000;
+}
+
 div.story {
     font-size: 19px;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -62,4 +66,12 @@ div.story p {
     overflow: auto;
     -o-object-fit: contain;
     object-fit: contain;
+}
+
+body {
+    position: absolute;
+    top: 0;
+    min-height: 100%;
+    width: 100%;
+    box-shadow: 0 0 200px rgba(0, 0, 0, 0.9) inset;
 }

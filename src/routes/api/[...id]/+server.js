@@ -46,8 +46,10 @@ export async function GET({ url }) {
     }
     let scorer = keySentence(massText.join(' '));
     let summaries = [];
-    massText.forEach((element) => {
-        summaries.push(scorer(element));
+    massText.forEach((element, i) => {
+        let sum = scorer(element);
+        sum.index = i;
+        summaries.push(sum);
     });
     let sum = summaries.sort((a, b) => {
         return a.score - b.score;

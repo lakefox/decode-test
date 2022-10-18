@@ -35,6 +35,7 @@ export async function GET({ url }) {
         rssItems.push(...rss.items);
     }
     rssItems = shuffle(rssItems);
+
     // fs.writeFileSync("./rss.json", JSON.stringify({ created: new Date().getTime(), content: rssItems }));
     return new Response(JSON.stringify(rssItems));
 
