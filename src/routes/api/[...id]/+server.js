@@ -9,7 +9,7 @@ export async function GET({ url }) {
     let newContent = [''];
 
     let data = {};
-    const html = await fetch(`https://cors.lowsh.workers.dev?${url.pathname.slice(5)}`).then((res) => res.text()).catch(() => {
+    const html = await fetch(`${url.pathname.slice(5)}`).then((res) => res.text()).catch(() => {
         throw error(400, "Invalid url");
     });
 
