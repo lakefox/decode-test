@@ -2,6 +2,7 @@ import Readability from '@mozilla/readability';
 import { keySentence } from './keySentence';
 import { JSDOM } from 'jsdom';
 import { error } from '@sveltejs/kit';
+import { removeStopwords } from "stopword/dist/stopword.esm.mjs";
 
 /** @type {import('./$types').RequestHandler} */
 export async function GET({ url }) {
@@ -55,11 +56,19 @@ export async function GET({ url }) {
         return a.score - b.score;
     })[0].text;
 
+    let sw = removeStopwords((article.title + " " + sum).toLowerCase().replace(/\?|\!/g, ".").replace(/[^\w.\s]+/g, "").replace(/\s+/g, " ").split(" "));
+
+    for (let a = 0; a < newContent.length; a++) {
+        for (let b = 0; b < sw.length; b++) {
+            newContent[a] = newContent[a].replaceAll(` ${sw[b]} `, `<g> ${sw[b]} </g>`);
+        }
+    }
 
     data.title = article.title;
     data.slides = newContent;
     data.summaries = summaries;
     data.keyPoint = sum;
+    data.stopwords = sw;
 
     return new Response(JSON.stringify(data));
 }

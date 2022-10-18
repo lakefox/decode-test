@@ -34,7 +34,7 @@
 {:else}
 	<img src={data.image} alt={data.title} class="fullCenterH " srcset="" />
 {/if}
-<div class="w-full bg-black text-white font-bold pl-[20px] fixed top-0"><a href="/">MOODL</a></div>
+<div class="w-full bg-black text-white font-bold pl-[20px] fixed top-0"><a href="/">DECODE</a></div>
 
 {#if !showStory}
 	<div class="story mx-auto max-w-[90%] w-[900px] my-[100px] ">

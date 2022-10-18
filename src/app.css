@@ -75,3 +75,7 @@ body {
     width: 100%;
     box-shadow: 0 0 200px rgba(0, 0, 0, 0.9) inset;
 }
+
+g {
+    color: rgb(96 165 250);
+}
