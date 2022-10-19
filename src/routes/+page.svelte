@@ -9,7 +9,7 @@
 			i = 0;
 		}
 		img = srcs[i];
-	}, 5000);
+	}, 10000);
 </script>
 
 <svelte:head>
@@ -29,11 +29,11 @@
 		DECODE
 	</div>
 	<div class="w-[700px] max-w-[90%] m-auto mt-[100px]">
-		<div class="purple font-bold text-[50px]">News Decoded</div>
+		<div class="pink font-bold text-[50px]">News Decoded</div>
 		<div
 			class="mb-[20px] bg-white px-[10px] border-[5px] border-black font-bold text-black text-[50px]"
 		>
-			We break down any story on the web into a quick easy to read infographic
+			We break down any story on the web into a quick easy to read infographic using AI
 		</div>
 	</div>
 	<a href="/explore">
