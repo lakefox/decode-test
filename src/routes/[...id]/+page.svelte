@@ -25,30 +25,35 @@
 	<meta name="description" content={data.keyPoint} />
 </svelte:head>
 
-<svelte:window bind:innerHeight bind:innerWidth />
+<svelte:window bind:innerHeight bind:innerWidth on:scroll={scroll} />
 
 {#if innerHeight < innerWidth}
 	<img src={data.image} alt={data.title} class="fullCenterW " srcset="" />
 {:else}
 	<img src={data.image} alt={data.title} class="fullCenterH " srcset="" />
 {/if}
-<div class="w-full bg-black text-white font-bold pl-[20px] fixed top-0"><a href="/">DECODE</a></div>
+<div class="w-full bg-black text-white font-bold pl-[20px] fixed top-0 flex">
+	<a href="/" class="mr-[10px]">DECODE</a>
+	<div class="marquee w-full"><p>{data.title}</p></div>
+</div>
 
 {#if !showStory}
 	<div class="story mx-auto max-w-[90%] w-[900px] my-[100px] ">
 		<div
-			class="text-[50px] leading-[57px] font-bold text-left mb-[20px] bg-white px-[10px] border-[5px] border-black"
+			class="text-[50px] leading-[57px] font-bold text-left mb-[20px] bg-black text-white p-[10px] px-[10px] "
 		>
 			{data.title}
 		</div>
-		<div class="text-[30px] font-bold mb-[20px] bg-white px-[10px] border-[5px] border-black w-min">
+		<div
+			class="text-[30px] font-bold mb-[20px] bg-white px-[10px]  w-min bg-black text-white p-[10px]"
+		>
 			Key&nbsp;Points
 		</div>
-		<div class="mb-[20px] bg-white px-[10px] border-[5px] border-black">
+		<div class="mb-[20px] bg-white px-[10px] bg-black text-white p-[10px]">
 			{data.keyPoint}
 		</div>
 		<div
-			class="mx-auto cursor-pointer mt-[200px] text-[30px] font-bold mb-[20px] bg-white px-[10px] border-[5px] border-black w-min"
+			class="mx-auto cursor-pointer mt-[200px] text-[30px] font-bold mb-[20px] bg-white px-[10px]  w-min bg-black text-white p-[10px]"
 			on:click={show}
 		>
 			READ
@@ -57,35 +62,33 @@
 {/if}
 
 {#if showStory}
-	<div class="story mx-auto max-w-[90%] w-[900px]">
-		<div class="">
-			<div
-				class="mt-[30vh] text-[30px] font-bold mb-[20px] bg-white px-[10px] border-[5px] border-black w-min"
-			>
-				The&nbsp;Story
-			</div>
-			<div class="bg-white px-[10px] border-[5px] border-black mb-[200px]">
-				{@html data.slides[index]}
-			</div>
-		</div>
-		<div class="fixed bottom-[30px] left-[50%] translate-x-[-50%]">
+	<div id="storyCont">
+		{#each data.slides as slide}
+			<div class="story mx-auto max-w-[90%] w-[900px]">
+				<div class="">
+					<div
+						class="mt-[30vh] text-[30px] font-bold mb-[20px] bg-white px-[10px]  w-min bg-black text-white p-[10px]"
+					>
+						The&nbsp;Story
+					</div>
+					<div class="bg-white px-[10px]  mb-[200px] bg-black text-white p-[10px]">
+						{@html slide}
+					</div>
+				</div>
+				<!-- <div class="fixed bottom-[30px] left-[50%] translate-x-[-50%]">
 			<div class="flex justify-center mt-[30px]">
-				<div
-					class="mx-[20px] p-[10px] px-[20px] bg-white border-[5px] border-black w-min"
-					on:click={back}
-				>
+				<div class="mx-[20px] p-[10px] px-[20px] bg-black text-white  w-min" on:click={back}>
 					BACK
 				</div>
-				<div class="mx-[20px] p-[10px] px-[20px] bg-white border-[5px] border-black w-min">
+				<div class="mx-[20px] p-[10px] px-[20px] bg-black text-white  w-min">
 					{index + 1}/{data.slides.length}
 				</div>
-				<div
-					class="mx-[20px] p-[10px] px-[20px] bg-white border-[5px] border-black w-min"
-					on:click={next}
-				>
+				<div class="mx-[20px] p-[10px] px-[20px] bg-black text-white  w-min" on:click={next}>
 					NEXT
 				</div>
 			</div>
-		</div>
+		</div> -->
+			</div>
+		{/each}
 	</div>
 {/if}
