@@ -1,23 +1,23 @@
 <script>
 	/** @type {import('./$types').PageData} */
 	export let data;
-	let rssItems = data.items.slice(0, 10);
+	let rssItems = data.items.slice(0, 50);
 </script>
 
 <svelte:head>
 	<title>DECODE</title>
 </svelte:head>
 <div
-	class="ml-[20px] mt-[20px] text-[60px] font-bold bg-white text-black w-min px-[20px] mb-[20px]"
+	class="ml-[20px] mt-[20px] text-[60px] font-bold bg-white fixed text-black w-min px-[20px] mb-[20px]"
 >
 	DECODE
 </div>
-<div class="w-full max-w-[900px] mx-auto">
-	<div class="flex flex-row flex-wrap justify-center">
-		{#each rssItems as item}
-			{#if item['media:content'] || item.enclosure}
+<div id="storyCont" class="pt-[200px] overflow-hidden">
+	{#each rssItems as item}
+		{#if item['media:content'] || item.enclosure}
+			<div class="story2 mx-auto max-w-[90%] w-[900px]">
 				<a href="/{encodeURIComponent(item.link)}">
-					<div class="relative w-[100%]">
+					<div class="relative">
 						<div class="w-[100%]">
 							{#if item['media:content']}
 								<img
@@ -47,7 +47,7 @@
 						</div>
 					</div>
 				</a>
-			{/if}
-		{/each}
-	</div>
+			</div>
+		{/if}
+	{/each}
 </div>

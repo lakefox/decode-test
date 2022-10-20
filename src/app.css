@@ -24,6 +24,13 @@ div.story {
     flex-shrink: 0;
 }
 
+div.story2 {
+    height: 100vh;
+    scroll-snap-align: center;
+    scroll-margin-top: 50vh;
+    flex-shrink: 0;
+}
+
 div.story a {
     text-decoration: underline;
     color: #3f51b5;
@@ -90,7 +97,7 @@ body {
 }
 
 g {
-    color: rgb(96 165 250);
+    color: #FFBE0B;
 }
 
 .yellow {

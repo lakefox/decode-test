@@ -7,6 +7,11 @@
 	let index = 0;
 	let showStory = false;
 
+	let summaries = data.summaries.sort((a, b) => {
+		return a.index - b.index;
+	});
+	console.log(summaries);
+
 	function back() {
 		index = Math.max(index - 1, 0);
 	}
@@ -63,14 +68,16 @@
 
 {#if showStory}
 	<div id="storyCont">
-		{#each data.slides as slide}
+		{#each data.slides as slide, i}
 			<div class="story mx-auto max-w-[90%] w-[900px]">
 				<div class="">
-					<div
-						class="mt-[30vh] text-[30px] font-bold mb-[20px] bg-white px-[10px]  w-min bg-black text-white p-[10px]"
-					>
-						The&nbsp;Story
-					</div>
+					{#if summaries[i]}
+						<div
+							class="mt-[30vh] text-[30px] font-bold mb-[20px] bg-white px-[10px]  w-full bg-black text-white p-[10px]"
+						>
+							{summaries[i].text}
+						</div>
+					{/if}
 					<div class="bg-white px-[10px]  mb-[200px] bg-black text-white p-[10px]">
 						{@html slide}
 					</div>
