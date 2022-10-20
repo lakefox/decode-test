@@ -8,7 +8,7 @@
 	<title>DECODE</title>
 </svelte:head>
 <div
-	class="ml-[20px] mt-[20px] text-[60px] font-bold bg-white fixed text-black w-min px-[20px] mb-[20px]"
+	class="ml-[20px] mt-[20px] text-[60px] font-bold bg-white fixed text-black w-min px-[20px] mb-[20px] z-10"
 >
 	DECODE
 </div>
