@@ -7,8 +7,9 @@
 	let index = 0;
 	let showStory = false;
 
+	// sort by best keysentance
 	let summaries = data.summaries.sort((a, b) => {
-		return a.index - b.index;
+		return b.score - a.score;
 	});
 	console.log(summaries);
 
