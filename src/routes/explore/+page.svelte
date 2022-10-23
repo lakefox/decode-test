@@ -21,13 +21,13 @@
 						<div class="w-[100%]">
 							{#if item['media:content']}
 								<img
-									class="w-[900px] max-w-[100%]"
+									class="w-[900px] max-w-[100%] max-h-[500px]"
 									src={item['media:content'].$.url}
 									alt={(item['media:content']['media:descritpion'] || [{ _: '' }])[0]._}
 								/>
 							{:else if item.enclosure}
 								<img
-									class="w-[900px] max-w-[100%]"
+									class="w-[900px] max-w-[100%] max-h-[500px]"
 									src={item.enclosure.url}
 									alt={item['content:encoded']}
 								/>

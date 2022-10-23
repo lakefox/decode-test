@@ -1,5 +1,6 @@
 export function keySentence(text) {
     // Change all punction to . and remove everything else, make lower case then split into sentances
+    text = text.replaceAll("U.S.", "US.");
     let sentances = text.replace(/\?|\!/g, ".").replace(/[^\w.\s]+/g, "").replace(/\s+/g, " ").toLowerCase().split(".");
     let wordList = {};
     // Count the word frequency
