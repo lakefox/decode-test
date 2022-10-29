@@ -88,12 +88,20 @@ div.story p {
     object-fit: contain;
 }
 
-body {
+#body {
     position: absolute;
     top: 0;
-    min-height: 100%;
     width: 100%;
+}
+
+#blur {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
     box-shadow: 0 0 200px rgba(0, 0, 0, 0.9) inset;
+    z-index: 0;
 }
 
 g {

@@ -3,11 +3,58 @@ import { keySentence } from './keySentence';
 import { JSDOM } from 'jsdom';
 import { error } from '@sveltejs/kit';
 import { removeStopwords } from "stopword/dist/stopword.esm.mjs";
-import { getCatagory } from "./categories";
+import { search } from 'serp';
+import { interlace } from './interlace';
 
 /** @type {import('./$types').RequestHandler} */
 export async function GET({ url }) {
-    return new Response(JSON.stringify(await genReport(`${url.pathname.slice(5)}`)));
+
+    let baseRpt = await genReport(`${url.pathname.slice(5)}`);
+    return new Promise((resolve, reject) => {
+        search({
+            host: "google.com",
+            qs: {
+                q: baseRpt.title
+            }
+        }).then(async (res) => {
+            // console.log("Google");
+            // console.log(res);
+            let sw = removeStopwords((baseRpt.title).toLowerCase().replace(/\?|\!/g, ".").replace(/[^\w.\s]+/g, "").replace(/\s+/g, " ").split(" "));
+            let sortedResults = [];
+            for (let a = 0; a < res.length; a++) {
+                for (let b = 0; b < allowed_sites.length; b++) {
+                    if (res[a].url.indexOf(allowed_sites[b]) != -1) {
+                        let score = 0;
+                        for (let c = 0; c < sw.length; c++) {
+                            if (res[a].title.toLowerCase().indexOf(sw[c]) != -1) {
+                                score += 1;
+                            }
+                        }
+                        res[a].score = score;
+                        sortedResults.push(res[a]);
+                    }
+                }
+            }
+
+            let baseURL = new URL(url.pathname.slice(5))
+            let mainURL = baseURL.host.split(".").slice(-2).join(".");
+            let refinedResults = [];
+            for (let i = 0; i < sortedResults.length; i++) {
+                if (sortedResults[i].url.indexOf(mainURL) == -1) {
+                    refinedResults.push(sortedResults[i]);
+                }
+            }
+            // console.log(refinedResults);
+            let reports = [baseRpt];
+            refinedResults = refinedResults.slice(0, 2);
+            for (let i = 0; i < refinedResults.length; i++) {
+                reports.push(await genReport(refinedResults[i].url));
+            }
+            interlace(reports);
+            resolve(new Response(JSON.stringify(baseRpt)));
+        })
+    })
+
 }
 
 async function genReport(url) {
@@ -61,7 +108,7 @@ async function genReport(url) {
         return a.score - b.score;
     })[0].text;
 
-    let sw = removeStopwords((article.title + " " + sum).replaceAll(/(\.|\?|\!)\s[A-Z]/g, r => r.replace(/\s/, "{break}")).toLowerCase().replace(/[^\w.\s]+/g, "").replace(/\s+/g, " ").split("{break}"));
+    let sw = removeStopwords((article.title + " " + sum).toLowerCase().replace(/\?|\!/g, ".").replace(/[^\w.\s]+/g, "").replace(/\s+/g, " ").split(" "));
 
     for (let a = 0; a < newContent.length; a++) {
         for (let b = 0; b < sw.length; b++) {
@@ -69,17 +116,12 @@ async function genReport(url) {
         }
     }
 
-    let catagory = getCatagory(massText.join(" "));
-
     data.title = article.title;
     data.slides = newContent;
     data.summaries = summaries;
     data.keyPoint = sum;
     data.stopwords = sw;
     data.text = massText;
-    data.catagory = catagory;
-
-    data.slides.push(`<a href="${url}">SOURCE</a>`)
 
     return data;
 }

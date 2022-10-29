@@ -7,11 +7,18 @@
 <svelte:head>
 	<title>DECODE</title>
 </svelte:head>
-<div
-	class="ml-[20px] mt-[20px] text-[60px] font-bold bg-white fixed text-black w-min px-[20px] mb-[20px] z-10"
->
-	DECODE
+<div class=" mt-[20px] fixed text-black w-min px-[20px] mb-[20px] z-10">
+	<div class="text-[60px] font-bold bg-white w-min px-[20px] mb-[20px]">DECODE</div>
+	<div class="bg-white font-mono font-bold text-[20px] py-[5px]">
+		<div class="hover:bg-zinc-400 pl-[20px] my-[2px] cursor-pointer">Popular</div>
+		<div class="hover:bg-zinc-400 pl-[20px] my-[2px] cursor-pointer">True Crime</div>
+		<div class="hover:bg-zinc-400 pl-[20px] my-[2px] cursor-pointer">Climate</div>
+		<div class="hover:bg-zinc-400 pl-[20px] my-[2px] cursor-pointer">Politics</div>
+		<div class="hover:bg-zinc-400 pl-[20px] my-[2px] cursor-pointer">World</div>
+		<div class="hover:bg-zinc-400 pl-[20px] my-[2px] cursor-pointer">History</div>
+	</div>
 </div>
+
 <div id="storyCont" class="pt-[200px] overflow-hidden">
 	{#each rssItems as item}
 		{#if item['media:content'] || item.enclosure}
@@ -22,12 +29,14 @@
 							{#if item['media:content']}
 								<img
 									class="w-[900px] max-w-[100%] max-h-[500px]"
+									loading="lazy"
 									src={item['media:content'].$.url}
 									alt={(item['media:content']['media:descritpion'] || [{ _: '' }])[0]._}
 								/>
 							{:else if item.enclosure}
 								<img
 									class="w-[900px] max-w-[100%] max-h-[500px]"
+									loading="lazy"
 									src={item.enclosure.url}
 									alt={item['content:encoded']}
 								/>
@@ -51,3 +60,9 @@
 		{/if}
 	{/each}
 </div>
+
+<style>
+	body {
+		overflow: hidden;
+	}
+</style>

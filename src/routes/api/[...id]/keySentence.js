@@ -1,7 +1,6 @@
 export function keySentence(text) {
     // Change all punction to . and remove everything else, make lower case then split into sentances
-    text = text.replaceAll("U.S.", "US.");
-    let sentances = text.replace(/\?|\!/g, ".").replace(/[^\w.\s]+/g, "").replace(/\s+/g, " ").toLowerCase().split(".");
+    let sentances = breakSentace(text);
     let wordList = {};
     // Count the word frequency
     for (let a = 0; a < sentances.length; a++) {
@@ -16,18 +15,18 @@ export function keySentence(text) {
     }
 
     return (paragraph) => {
-        let sentances = paragraph.replace(/\?|\!/g, ".").replace(/[^\w.\s]+/g, "").replace(/\s+/g, " ").toLowerCase().split(".");
-        let sentances2 = paragraph.replace(/\?|\!/g, ".").split(".");
+        let sentances = breakSentace(paragraph);
+        let sentances2 = breakSentace(paragraph, true);
         let scores = {}
         for (let a = 0; a < sentances.length; a++) {
             if (sentances[a].split(" ").length > 3) {
-                scores[sentances[a]] = 0;
+                let score = 0;
                 const words = sentances[a].trim().split(" ");
                 for (let b = 0; b < words.length; b++) {
                     const word = words[b];
-                    scores[sentances[a]] += wordList[word];
+                    score += wordList[word];
                 }
-                scores[sentances[a]] = { score: scores[sentances[a]] / words.length, text: sentances2[a] };
+                scores[sentances[a]] = { score: score / words.length, text: sentances2[a] };
             }
         }
         if (scores[""]) {
@@ -41,5 +40,12 @@ export function keySentence(text) {
             }
         }
         return el;
+    }
+    function breakSentace(sentances, keep = false) {
+        if (keep) {
+            return sentances.replaceAll(/[^Mr|mr|Mrs|mrs|Ms|ms](\.|\?|\!)\s[A-Z]/g, r => r.replace(/\s/, "{break}")).split("{break}");
+        } else {
+            return sentances.replaceAll(/[^Mr|mr|Mrs|mrs|Ms|ms](\.|\?|\!)\s[A-Z]/g, r => r.replace(/\s/, "{break}")).toLowerCase().split("{break}");
+        }
     }
 }
