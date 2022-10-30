@@ -3,6 +3,7 @@ import { keySentence } from './keySentence';
 import { JSDOM } from 'jsdom';
 import { removeStopwords } from "stopword/dist/stopword.esm.mjs";
 import { getCatagory } from "./categories";
+import { error } from '@sveltejs/kit';
 
 export async function genReport(url) {
     let content = [''];
@@ -61,7 +62,7 @@ export async function genReport(url) {
     });
 
 
-    let sw = removeStopwords((article.title + " " + sum).replaceAll(/(\.|\?|\!)\s[A-Z]/g, r => r.replace(/\s/, "{break}")).toLowerCase().replace(/[^\w.\s]+/g, "").replace(/\s+/g, " ").split("{break}"));
+    let sw = removeStopwords((article.title + " " + sum[0].text).replaceAll(/[^a-z0-9\s]/gi, "").toLowerCase().replace(/[^\w.\s]+/g, "").replace(/\s+/g, " ").split(" "));
 
     for (let a = 0; a < newContent.length; a++) {
         for (let b = 0; b < sw.length; b++) {
@@ -78,6 +79,7 @@ export async function genReport(url) {
     data.stopwords = sw;
     data.text = massText;
     data.catagory = catagory;
+    data.url = url;
 
     data.slides.push(`<a href="${url}">SOURCE</a>`)
 

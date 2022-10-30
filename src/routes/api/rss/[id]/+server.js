@@ -1,44 +1,29 @@
 import { error } from '@sveltejs/kit';
-import Parser from "rss-parser";
 import fs from "fs";
+import { genReport } from "../../../../lib/genReport";
 
 /** @type {import('./$types').RequestHandler} */
 export async function GET({ url }) {
     let rss = { created: 0 };
-    if (fs.existsSync("./feeds/rss.json")) {
-        rss = JSON.parse(fs.readFileSync("./feeds/rss.json"));
+    if (fs.existsSync(`./feeds/${url.pathname.slice(9)}.json`)) {
+        rss = JSON.parse(fs.readFileSync(`./feeds/${url.pathname.slice(9)}.json`));
     }
     if (rss.created >= new Date().getTime() - 3.6e+6) {
         return new Response(JSON.stringify(rss.content));
     } else {
-        let feeds = [
-            'http://rss.cnn.com/rss/cnn_topstories.rss',
-            'https://www.huffpost.com/section/front-page/feed?x=1',
-            'https://moxie.foxnews.com/google-publisher/latest.xml',
-            'https://cdn.feedcontrol.net/8/1114-wioSIX3uu8MEj.xml',
-            'http://www.politico.com/rss/politicopicks.xml',
-            'https://www.yahoo.com/news/rss',
-            'https://www.latimes.com/local/rss2.0.xml',
-            'https://rss.nytimes.com/services/xml/rss/nyt/Politics.xml'
-        ];
-        let rssItems = [];
-        let parser = new Parser({
-            customFields: {
-                item: [
-                    'media:content', 'meta:content'
-                ]
+        let res = await fetch(`https://www.reddit.com/r/${url.pathname.slice(9)}/top.json`).then(r => r.json());
+        let posts = res.data.children;
+        let reports = [];
+        for (let i = 0; i < posts.length; i++) {
+            if (typeof posts[i].data.url != "undefined" && posts[i].data.url.indexOf("reddit") == -1) {
+                let report = await genReport(posts[i].data.url);
+                reports.push(report);
             }
-        });
-        for (let i = 0; i < feeds.length; i++) {
-            const feed = feeds[i];
-            let rss = await parser.parseURL(feed);
-            rssItems.push(...rss.items);
         }
-        rssItems = shuffle(rssItems);
+        reports = shuffle(reports);
 
-        fs.writeFileSync("./feeds/rss.json", JSON.stringify({ created: new Date().getTime(), content: rssItems }));
-        return new Response(JSON.stringify(rssItems));
-
+        fs.writeFileSync(`./feeds/${url.pathname.slice(9)}.json`, JSON.stringify({ created: new Date().getTime(), content: reports }));
+        return new Response(JSON.stringify(reports));
     }
 }
 

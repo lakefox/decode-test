@@ -1,6 +1,6 @@
-import { genReport } from "./genReport";
+import { genReport } from "../../../lib/genReport";
 
 /** @type {import('./$types').RequestHandler} */
 export async function GET({ url }) {
-    return new Response(JSON.stringify(await genReport(`${url.pathname.slice(5)}`)));
+    return new Response(JSON.stringify(await genReport(url.pathname.slice(5))));
 }
