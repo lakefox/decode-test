@@ -35,7 +35,7 @@
 	<meta name="description" content={data.keyPoint} />
 </svelte:head>
 
-<svelte:window bind:innerHeight bind:innerWidth on:scroll={scroll} />
+<svelte:window bind:innerHeight bind:innerWidth />
 <div id="blur" />
 <div id="body">
 	{#if innerHeight < innerWidth}
@@ -83,7 +83,7 @@
 				<div class="story mx-auto max-w-[90%] w-[900px]">
 					<div class="mt-[30vh]">
 						{#each summaries as summary}
-							{#if summary.index + 1 == i && summary.text.length < slide.length / 2}
+							{#if summary.index == i && summary.text.length < slide.length / 2}
 								<div
 									class="text-[30px] font-bold mb-[20px] bg-white px-[10px]  w-full bg-black text-white p-[10px]"
 								>

@@ -1,7 +1,7 @@
 import { error } from '@sveltejs/kit';
 import Parser from "rss-parser";
 import fs from "fs";
-// &srcfFY3Hxk@G!5a
+
 /** @type {import('./$types').RequestHandler} */
 export async function GET({ url }) {
     let rss = { created: 0 };

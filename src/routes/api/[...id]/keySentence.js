@@ -26,7 +26,9 @@ export function keySentence(text) {
                     const word = words[b];
                     score += wordList[word];
                 }
-                scores[sentances[a]] = { score: score / words.length, text: sentances2[a] };
+                if (sentances2[a]) {
+                    scores[sentances[a]] = { score: score / words.length, text: sentances2[a] };
+                }
             }
         }
         if (scores[""]) {
