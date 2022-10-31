@@ -2,6 +2,7 @@
 	/** @type {import('./$types').PageData} */
 	export let data;
 	let rssItems = data.items.slice(0, 50);
+	console.log(data);
 	let showMenu = false;
 	let innerWidth;
 </script>
@@ -21,7 +22,9 @@
 			<div class="hover:bg-zinc-400 pl-[20px] my-[2px] cursor-pointer">Popular</div>
 			<div class="hover:bg-zinc-400 pl-[20px] my-[2px] cursor-pointer">True Crime</div>
 			<div class="hover:bg-zinc-400 pl-[20px] my-[2px] cursor-pointer">Climate</div>
-			<div class="hover:bg-zinc-400 pl-[20px] my-[2px] cursor-pointer">Politics</div>
+			<a href="/explore/politics">
+				<div class="hover:bg-zinc-400 pl-[20px] my-[2px] cursor-pointer">Politics</div>
+			</a>
 			<div class="hover:bg-zinc-400 pl-[20px] my-[2px] cursor-pointer">World</div>
 			<a href="/explore/history">
 				<div class="hover:bg-zinc-400 pl-[20px] my-[2px] cursor-pointer">History</div>

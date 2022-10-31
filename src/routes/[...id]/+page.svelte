@@ -92,7 +92,7 @@
 							{/if}
 						{/each}
 						<div class="bg-white px-[10px]  mb-[200px] bg-black text-white p-[10px]">
-							{@html slide}
+							{@html slide.text}
 						</div>
 					</div>
 				</div>

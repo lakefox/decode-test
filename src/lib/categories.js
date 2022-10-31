@@ -45,6 +45,5 @@ export function getCatagory(text) {
 
         }
     }
-    console.log(results);
     return maxStore;
 }

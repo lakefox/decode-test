@@ -12,12 +12,16 @@ export async function GET({ url }) {
         return new Response(JSON.stringify(rss.content));
     } else {
         let res = await fetch(`https://www.reddit.com/r/${url.pathname.slice(9)}/top.json`).then(r => r.json());
-        let posts = res.data.children;
+        let posts = res.data.children.slice(0, 50);
         let reports = [];
         for (let i = 0; i < posts.length; i++) {
             if (typeof posts[i].data.url != "undefined" && posts[i].data.url.indexOf("reddit") == -1) {
-                let report = await genReport(posts[i].data.url);
-                reports.push(report);
+                try {
+                    let report = await genReport(posts[i].data.url);
+                    reports.push(report);
+                } catch (error) {
+                    console.log(error);
+                }
             }
         }
         reports = shuffle(reports);
