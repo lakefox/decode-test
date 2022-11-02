@@ -12,13 +12,13 @@ export async function genReport(url) {
     const html = await fetch(url).then((res) => res.text());
     let doc = new JSDOM(html);
     let article = new Readability.Readability(doc.window.document).parse();
-    console.log(article);
     if (article == null) {
         throw new Error("No Content");
     }
     let parsed = new JSDOM(article.content).window.document;
     content = [...parsed.querySelectorAll('p')];
     let images = [...parsed.querySelectorAll('img')].map((e) => { return { src: e.src, title: (e.title || e.alt) } });
+    let imgP = [...parsed.querySelectorAll('p, img')];
     content = content.filter((a) => {
         return (
             a.innerHTML.trim() != '' &&
@@ -33,6 +33,7 @@ export async function genReport(url) {
     }
     cntLn = cntLn / content.length;
     let massText = [];
+    let imageCount = 0;
     for (let i = 0; i < content.length; i++) {
         if (content[i].textContent.length < cntLn) {
             newContent[newContent.length - 1].text += content[i].innerHTML;
@@ -40,6 +41,14 @@ export async function genReport(url) {
         } else {
             newContent.push({ text: content[i].innerHTML });
             massText.push(content[i].textContent);
+        }
+
+        imgP.shift();
+        if (imgP.length > 0) {
+            if (imgP[0].nodeName == "IMG") {
+                newContent[newContent.length - 1].image = imageCount;
+                imageCount++;
+            }
         }
     }
     if (newContent[0].text == '') {
