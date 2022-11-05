@@ -29,7 +29,6 @@
 		"@mozilla/readability": "^0.4.2",
 		"@sveltejs/adapter-node": "^1.0.0-next.99",
 		"jsdom": "^20.0.1",
-		"rss-parser": "^3.12.0",
 		"serp": "^2.2.2",
 		"stopword": "^2.0.5"
 	}
