@@ -90,8 +90,5 @@ export async function genReport(url) {
     data.catagory = catagory;
     data.url = url;
     data.images = images;
-
-    data.slides.push({ text: `<a href="${url}">SOURCE</a>` })
-
     return data;
 }
