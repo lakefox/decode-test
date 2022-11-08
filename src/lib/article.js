@@ -1,22 +1,37 @@
 import { interlace } from './interlace';
 import { genReport } from './genReport';
-import { search } from 'serp';
+import { search } from './search';
+import { getCatagory } from "./categories";
+import { citation } from "./citation";
+import readingTime from 'reading-time';
 
 export async function article(query) {
     console.log(query);
     return new Promise((resolve, reject) => {
-        search({
-            host: "google.com",
-            qs: {
-                q: query
+        search("information about " + query).then(async (res) => {
+
+            let reports = await multiReports(res.slice(0, 10));
+
+            let interlaced = await interlace(reports, query);
+
+            let text = "";
+
+            for (let i = 0; i < interlaced.length; i++) {
+                text += " " + interlaced[i].text;
+
             }
-        }).then(async (res) => {
 
-            let reports = await multiReports(res);
+            let rep = {
+                text: text,
+                // reports: reports,
+                interlaced: interlaced,
+                catagory: getCatagory(text),
+                readingTime: readingTime(text),
+                sources: citation(reports),
+                articles: reports
+            }
 
-            let interlaced = await interlace(reports);
-
-            resolve(reports);
+            resolve(rep);
         })
     })
 }

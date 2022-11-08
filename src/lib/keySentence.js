@@ -47,10 +47,11 @@ export function keySentence(text, justWords = false) {
         }
     }
     function breakSentace(sentances, keep = false) {
+        sentances = sentances.replaceAll(/\s+/g, " ");
         if (keep) {
-            return sentances.replaceAll(/[^Mr|mr|Mrs|mrs|Ms|ms](\.|\?|\!)\s[A-Z]/g, r => r.replace(/\s/, "{break}")).split("{break}");
+            return sentances.replace(/\[[0-9]+\]/g, "").replace(/(?<!Mr|Mrs|Ms|Dr|Sr)([\.?\??\!?]) ([A-Z])/gi, "$1{break}$2").split("{break}");
         } else {
-            return sentances.replaceAll(/[^Mr|mr|Mrs|mrs|Ms|ms](\.|\?|\!)\s[A-Z]/g, r => r.replace(/\s/, "{break}")).toLowerCase().split("{break}");
+            return sentances.replace(/\[[0-9]+\]/g, "").replace(/(?<!Mr|Mrs|Ms|Dr|Sr)([\.?\??\!?]) ([A-Z])/gi, "$1{break}$2").toLowerCase().split("{break}");
         }
     }
 }

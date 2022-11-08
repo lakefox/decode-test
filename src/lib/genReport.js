@@ -9,7 +9,8 @@ export async function genReport(url) {
     let newContent = [{ text: "" }];
 
     let data = {};
-    const html = await fetch(url).then((res) => res.text());
+    let html = await fetch(url).then((res) => res.text());
+    html = html.replace(/\</g, " <");
     let doc = new JSDOM(html);
     let article = new Readability.Readability(doc.window.document).parse();
     if (article == null) {
@@ -54,6 +55,7 @@ export async function genReport(url) {
     if (newContent[0].text == '') {
         newContent = newContent.slice(1);
     }
+    massText = massText.map((e) => { return e.replace(/\[[0-9]+\]/g, "").replaceAll(/\s+/g, " ").replace(/\s\./g, ".").trim() })
     let scorer = keySentence(massText.join(' '));
     let summaries = [];
     massText.forEach((element, i) => {
@@ -90,5 +92,7 @@ export async function genReport(url) {
     data.catagory = catagory;
     data.url = url;
     data.images = images;
+    data.author = article.byline || "Unknown Uknown";
+    data.site = article.siteName || "Unkown";
     return data;
 }
