@@ -1,3 +1,5 @@
+import { breakSentace } from "./utilities/breakSentances";
+
 export function keySentence(text, justWords = false) {
     // Change all punction to . and remove everything else, make lower case then split into sentances
     let sentances = breakSentace(text);
@@ -44,14 +46,6 @@ export function keySentence(text, justWords = false) {
                 }
             }
             return el;
-        }
-    }
-    function breakSentace(sentances, keep = false) {
-        sentances = sentances.replaceAll(/\s+/g, " ");
-        if (keep) {
-            return sentances.replace(/\[[0-9]+\]/g, "").replace(/(?<!Mr|Mrs|Ms|Dr|Sr)([\.?\??\!?]) ([A-Z])/gi, "$1{break}$2").split("{break}");
-        } else {
-            return sentances.replace(/\[[0-9]+\]/g, "").replace(/(?<!Mr|Mrs|Ms|Dr|Sr)([\.?\??\!?]) ([A-Z])/gi, "$1{break}$2").toLowerCase().split("{break}");
         }
     }
 }

@@ -4,15 +4,15 @@ import { search } from './search';
 import { getCatagory } from "./categories";
 import { citation } from "./citation";
 import readingTime from 'reading-time';
+import { context } from './context';
 
 export async function article(query) {
-    console.log(query);
     return new Promise((resolve, reject) => {
         search("information about " + query).then(async (res) => {
 
             let reports = await multiReports(res.slice(0, 10));
-
-            let interlaced = await interlace(reports, query);
+            let ctx = await context(reports);
+            let interlaced = await interlace(ctx, query);
 
             let text = "";
 

@@ -1,4 +1,5 @@
 import { JSDOM } from 'jsdom';
+import { chunks } from "./utilities/chunk";
 
 export async function search(query) {
     const html = await fetch(`https://lite.duckduckgo.com/lite/?q=${encodeURIComponent(query)}`).then((res) => res.text());
@@ -20,10 +21,4 @@ export async function search(query) {
         }
     }
     return results;
-}
-
-function* chunks(arr, n) {
-    for (let i = 0; i < arr.length; i += n) {
-        yield arr.slice(i, i + n);
-    }
 }
