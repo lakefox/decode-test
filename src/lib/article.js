@@ -8,10 +8,13 @@ import readingTime from 'reading-time';
 export async function article(query) {
     return new Promise((resolve, reject) => {
         search("information about " + query).then(async (res) => {
-
+            console.time()
             let reports = await multiReports(res.slice(0, 10));
+            console.timeEnd()
+            console.time()
             let interlaced = await interlace(reports, query);
-
+            console.timeEnd()
+            console.time()
             let text = "";
 
             for (let i = 0; i < interlaced.length; i++) {
@@ -25,9 +28,9 @@ export async function article(query) {
                 catagory: getCatagory(text),
                 readingTime: readingTime(text),
                 sources: citation(reports),
-                articles: reports
+                // articles: reports
             }
-
+            console.timeEnd()
             resolve(rep);
         })
     })

@@ -3,6 +3,7 @@ import { keySentence } from './keySentence';
 import { JSDOM } from 'jsdom';
 import { removeStopwords } from "stopword/dist/stopword.esm.mjs";
 import { getCatagory } from "./categories";
+import { cache } from "./cache";
 
 /**
  * It takes a URL, fetches the HTML, parses it, and returns a JSON object with the title, summary, and
@@ -15,7 +16,7 @@ export async function genReport(url) {
     let newContent = [{ text: "" }];
 
     let data = {};
-    let html = await fetch(url).then((res) => res.text());
+    let html = await cache(url, "text");
     html = html.replace(/\</g, " <");
     let doc = new JSDOM(html);
     let article = new Readability.Readability(doc.window.document).parse();

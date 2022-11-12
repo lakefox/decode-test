@@ -1,5 +1,6 @@
 import { JSDOM } from 'jsdom';
 import { chunks } from "./utilities/chunk";
+import { cache } from "./cache";
 
 /**
  * It fetches the HTML of the DuckDuckGo search page, parses it, and returns the results
@@ -10,7 +11,7 @@ import { chunks } from "./utilities/chunk";
  *     url: The url of the result
  */
 export async function search(query) {
-    const html = await fetch(`https://lite.duckduckgo.com/lite/?q=${encodeURIComponent(query)}`).then((res) => res.text());
+    const html = await cache(`https://lite.duckduckgo.com/lite/?q=${encodeURIComponent(query)}`, "text");
     let doc = new JSDOM(html);
     let document = doc.window.document;
     let sponsored = [...document.querySelectorAll("tr[class='result-sponsored']")].pop();
