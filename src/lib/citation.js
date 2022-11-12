@@ -1,3 +1,8 @@
+/**
+ * It takes an array of objects and returns an array of strings
+ * @param reports - an array of objects that contain the following properties:
+ * @returns A list of citations.
+ */
 export function citation(reports) {
     let template = (aLast, aFirst, title, site, publisher, date, url) => {
         // Date: 27 Jan. 2022

@@ -1,3 +1,10 @@
+/**
+ * It takes a list of reports and a query, and returns a list of sentences that are most relevant to
+ * the query
+ * @param reports - An array of reports.
+ * @param query - The query to search for.
+ * @returns A list of sentences that are related to the query.
+ */
 export async function interlace(reports, query) {
     let keysentances = [];
     let queryWords = query.replaceAll(/^\w+/g, "").toLowerCase().split(" ");
@@ -53,6 +60,7 @@ export async function interlace(reports, query) {
     let chain = [
         {
             text: keysentances[topIndex].summary.text,
+            fullText: reports[keysentances[topIndex].report].text[reports[keysentances[topIndex].report].summaries[keysentances[topIndex].index].index],
             report: keysentances[topIndex].report,
             index: keysentances[topIndex].index,
             referTo: keysentances[topIndex].scores[0].index,
@@ -77,6 +85,7 @@ export async function interlace(reports, query) {
         usedIndex.push(ref);
         chain.push({
             text: keysentances[current.referTo].summary.text,
+            fullText: reports[keysentances[current.referTo].report].text[reports[keysentances[current.referTo].report].summaries[keysentances[current.referTo].index].index],
             report: keysentances[current.referTo].report,
             index: keysentances[current.referTo].index,
             referTo: ref,

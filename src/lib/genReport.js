@@ -4,6 +4,12 @@ import { JSDOM } from 'jsdom';
 import { removeStopwords } from "stopword/dist/stopword.esm.mjs";
 import { getCatagory } from "./categories";
 
+/**
+ * It takes a URL, fetches the HTML, parses it, and returns a JSON object with the title, summary, and
+ * text of the article
+ * @param url - The URL of the article you want to summarize.
+ * @returns An object with the following properties:
+ */
 export async function genReport(url) {
     let content = [''];
     let newContent = [{ text: "" }];

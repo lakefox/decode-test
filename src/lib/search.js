@@ -1,6 +1,14 @@
 import { JSDOM } from 'jsdom';
 import { chunks } from "./utilities/chunk";
 
+/**
+ * It fetches the HTML of the DuckDuckGo search page, parses it, and returns the results
+ * @param query - The query to search for
+ * @returns An array of objects with the following properties:
+ *     title: The title of the result
+ *     description: The description of the result
+ *     url: The url of the result
+ */
 export async function search(query) {
     const html = await fetch(`https://lite.duckduckgo.com/lite/?q=${encodeURIComponent(query)}`).then((res) => res.text());
     let doc = new JSDOM(html);

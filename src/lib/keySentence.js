@@ -1,5 +1,13 @@
 import { breakSentace } from "./utilities/breakSentances";
 
+/**
+ * It takes a text and returns a function that takes a paragraph and returns the most important
+ * sentence in that paragraph.
+ * @param text - The text to be analyzed
+ * @param [justWords=false] - If true, it will return a word frequency list. If false, it will return a
+ * function that will return the most important sentence in a paragraph.
+ * @returns A function that takes a paragraph and returns the most important sentence.
+ */
 export function keySentence(text, justWords = false) {
     // Change all punction to . and remove everything else, make lower case then split into sentances
     let sentances = breakSentace(text);
