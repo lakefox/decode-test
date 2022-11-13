@@ -17,8 +17,8 @@ export async function article(query) {
             }
 
             let rep = {
-                text: text,
                 // reports: reports,
+                // images:
                 interlaced: interlaced,
                 catagory: getCatagory(text),
                 readingTime: readingTime(text),

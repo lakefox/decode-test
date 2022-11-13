@@ -2,6 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-    background: #000;
+.shadow-upper {
+    box-shadow: 0 -5px 50px -12px rgb(0 0 0 / 25%);
 }

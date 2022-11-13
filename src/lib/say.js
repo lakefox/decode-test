@@ -1,4 +1,4 @@
-function say(lang = "en-US") {
+export function say(lang = "en-US") {
     const dict = {};
     const audioContext = new AudioContext();
     const mediaStreamAudioDestinationNode = new MediaStreamAudioDestinationNode(audioContext);
@@ -6,6 +6,7 @@ function say(lang = "en-US") {
     this.dict = dict;
     let loaded = () => { };
     this.add = (text) => {
+        // add <br t="1"> spacing to the sentances anything in tags can be adjusted without reloading it
         if (text != "") {
             if (!dict[text]) {
                 dict[text] = null;

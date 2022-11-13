@@ -14,7 +14,7 @@ export function cache(url, type) {
             if (type == "text") {
                 data = await f.text();
             } else if (type == "json") {
-                data = await f.json();
+                data = JSON.stringify(await f.json());
             }
             writeFile(filePath, data.toString(), (err) => {
                 resolve(data);
