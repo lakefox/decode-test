@@ -7,5 +7,7 @@ export async function GET({ url }) {
         return new Response("error");
 
     }
-    return new Response(await cache(`http://localhost:3000/api/${url.pathname.slice(7).toLowerCase()}`, "json"));
+    let res = new Response(await cache(`http://localhost:3000/api/${url.pathname.slice(7).toLowerCase()}`, "json"));
+    res.headers.append('Access-Control-Allow-Origin', "*")
+    return res;
 }
