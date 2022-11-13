@@ -7,5 +7,5 @@ export async function GET({ url }) {
         return new Response("error");
 
     }
-    return new Response(await cache(`http://localhost:5173/api/${url.pathname.slice(7).toLowerCase()}`, "json"));
+    return new Response(await cache(`http://localhost:3000/api/${url.pathname.slice(7).toLowerCase()}`, "json"));
 }
