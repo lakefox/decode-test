@@ -30,6 +30,8 @@
 		"@sveltejs/adapter-node": "^1.0.0-next.99",
 		"jsdom": "^20.0.1",
 		"reading-time": "^1.5.0",
-		"stopword": "^2.0.5"
+		"stopword": "^2.0.5",
+		"node-pre-gyp": "^0.17.0",
+		"canvas": "^2.10.2"
 	}
 }
