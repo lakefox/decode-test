@@ -17,13 +17,12 @@ export async function article(query) {
             }
 
             let rep = {
-                // reports: reports,
+                reports: reports,
                 // images:
                 interlaced: interlaced,
                 catagory: getCatagory(text),
                 readingTime: readingTime(text),
-                sources: citation(reports),
-                // articles: reports
+                sources: citation(reports)
             }
             resolve(rep);
         })
